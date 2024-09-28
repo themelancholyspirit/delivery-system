@@ -27,8 +27,10 @@ To run the tests, you can use the following command:
 make test
 ```
 
+
 ## API Endpoints
 
+```
 
 1. Create Order
 Method: POST
@@ -70,7 +72,4 @@ curl -X PATCH http://localhost:8080/orders/1 -H "Content-Type: application/json"
     "status": "TAKEN"
 }'
 
-
-
-
-
+```
