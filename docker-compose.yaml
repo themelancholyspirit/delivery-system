@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database service (for production)
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
+      DB_NAME: mydatabase
+    networks:
+      - mynetwork
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+
+networks:
+  mynetwork:
